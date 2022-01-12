@@ -1,6 +1,36 @@
+[tool.poetry]
+name = "threatfox"
+version = "0.0.1"
+description = "Python library and command line tool for interacting with the ThreatFox API provided by abuse.ch."
+authors = ["Sean McFeely <mcfeelynaes@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+coloredlogs = "^15.0.1"
+argparse = "^1.4.0"
+aiodns = "^3.0.0"
+aiohttp = "^3.8.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+black = "^21.9b0"
+pytest-asyncio = "^0.15.1"
+aioresponses = "^0.7.2"
+
+
 [build-system]
 requires = [
     "setuptools>=42",
     "wheel"
 ]
 build-backend = "setuptools.build_meta"
+
+#[build-system]
+#requires = ["poetry-core>=1.0.0"]
+#build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 120
+
+#[tool.poetry.scripts]
+#threatfox = "threatfox.cli:main"

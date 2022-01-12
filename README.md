@@ -15,6 +15,9 @@ Massive thanks to abuse.ch for all the work they do!
 
 ## Install
 
+```
+pip install threatfox
+```
 
 ## Configure
 
