@@ -1,0 +1,4 @@
+argparse
+coloredlogs
+aiodns
+aiohttp
