@@ -10,7 +10,7 @@ from typing import List
 
 from threatfox.config import get_api_url, get_api_key, get_configured_proxy, get_max_result_contraint
 
-__version__ = "0.1.1"
+__version__ = "0.0.1"
 
 
 class ThreatFoxClient:
@@ -92,7 +92,7 @@ class ThreatFoxClient:
 
         return json.loads(response.decode("utf-8"))
 
-    async def get_iocs(self, days: int=None, **kwargs):
+    async def get_iocs(self, days: int = None, **kwargs):
         """Get ThreatFox IOCs.
 
         Args:
@@ -106,7 +106,7 @@ class ThreatFoxClient:
         if days is not None:
             assert isinstance(days, int)
             payload["days"] = days
-        
+
         results = await self.execute_and_return_object("POST", payload=payload, **kwargs)
         return results
 
@@ -131,7 +131,7 @@ class ThreatFoxClient:
         """Search ThreatFox for an IOC.
 
         NOTE: there is a separete endpoint for searching for hash IOCs.
-        # XXX use regex to make hash determination and have one search function? 
+        # XXX use regex to make hash determination and have one search function?
 
         Args:
             search_term: A string representation of any IOC.
@@ -143,7 +143,7 @@ class ThreatFoxClient:
             "query": "search_ioc",
             "search_term": search_term,
         }
-        
+
         results = await self.execute_and_return_object("POST", payload=payload, **kwargs)
         return results
 
@@ -162,10 +162,10 @@ class ThreatFoxClient:
             "query": "search_hash",
             "hash": hash,
         }
-        
+
         results = await self.execute_and_return_object("POST", payload=payload, **kwargs)
         return results
-    
+
     async def query_tag(self, tag: str, limit=100, **kwargs):
         """Search ThreatFox for IOCs associated with a tag.
 
@@ -176,12 +176,8 @@ class ThreatFoxClient:
             A list of dictionaries corresponding to ThreatFox IOC results.
         """
 
-        payload = {
-            "query": "taginfo",
-            "tag": tag,
-            "limit": limit
-        }
-        
+        payload = {"query": "taginfo", "tag": tag, "limit": limit}
+
         results = await self.execute_and_return_object("POST", payload=payload, **kwargs)
         return results
 
@@ -195,16 +191,24 @@ class ThreatFoxClient:
             A list of dictionaries corresponding to ThreatFox IOC results.
         """
 
-        payload = {
-            "query": "malwareinfo",
-            "malware": malware,
-            "limit": limit
-        }
-        
+        payload = {"query": "malwareinfo", "malware": malware, "limit": limit}
+
         results = await self.execute_and_return_object("POST", payload=payload, **kwargs)
         return results
 
-    async def submit_iocs(self, threat_type: str, ioc_type: str, malware: str, iocs: List[str], confidence_level: int=50, reference: str=None, tags: List[str]=[], comment: str=None, anonymous: int=0, **kwargs):
+    async def submit_iocs(
+        self,
+        threat_type: str,
+        ioc_type: str,
+        malware: str,
+        iocs: List[str],
+        confidence_level: int = 50,
+        reference: str = None,
+        tags: List[str] = [],
+        comment: str = None,
+        anonymous: int = 0,
+        **kwargs,
+    ):
         """Submit IOCs to ThreatFox.
 
         Args:
@@ -222,28 +226,27 @@ class ThreatFoxClient:
         """
 
         payload = {
-            'query': 'submit_ioc',
-            'threat_type': threat_type,
-            'ioc_type': ioc_type,
-            'malware': malware,
-            'confidence_level': confidence_level,
-            'reference': reference,
-            'comment': comment,
-            'anonymous': anonymous,
-            'tags': tags,
-            'iocs': iocs
+            "query": "submit_ioc",
+            "threat_type": threat_type,
+            "ioc_type": ioc_type,
+            "malware": malware,
+            "confidence_level": confidence_level,
+            "reference": reference,
+            "comment": comment,
+            "anonymous": anonymous,
+            "tags": tags,
+            "iocs": iocs,
         }
-        
-        #status, result = await self.execute("POST", payload=payload, **kwargs)
 
-        #if status != 200:
+        # status, result = await self.execute("POST", payload=payload, **kwargs)
+
+        # if status != 200:
         #    self.logger.error(f"got {status} status code: {response}")
 
         results = await self.execute_and_return_object("POST", payload=payload, **kwargs)
         return results
 
-
-    async def search_malware_families(self, malware: str, platform: str=None, **kwargs):
+    async def search_malware_families(self, malware: str, platform: str = None, **kwargs):
         """Lookup the correct malware family name.
 
         ThreatFox uses the malware labels from Malpedia. You can use this API call to search
@@ -256,15 +259,11 @@ class ThreatFoxClient:
             A list of dictionaries corresponding to ThreatFox IOC results.
         """
 
-        # XXX 
-        #supported_platforms = ['win', 'osx', 'apk', 'jar', 'elf']
+        # XXX
+        # supported_platforms = ['win', 'osx', 'apk', 'jar', 'elf']
 
-        payload = {
-            "query": "get_label",
-            "malware": malware,
-            "patform": platform
-        }
-        
+        payload = {"query": "get_label", "malware": malware, "patform": platform}
+
         results = await self.execute_and_return_object("POST", payload=payload, **kwargs)
         return results
 
@@ -279,7 +278,7 @@ class ThreatFoxClient:
         """
 
         payload = {"query": "malware_list"}
-        
+
         results = await self.execute_and_return_object("POST", payload=payload, **kwargs)
         return results
 
@@ -294,7 +293,7 @@ class ThreatFoxClient:
         """
 
         payload = {"query": "types"}
-        
+
         results = await self.execute_and_return_object("POST", payload=payload, **kwargs)
         return results
 
@@ -307,6 +306,6 @@ class ThreatFoxClient:
         """
 
         payload = {"query": "tag_list"}
-        
+
         results = await self.execute_and_return_object("POST", payload=payload, **kwargs)
         return results

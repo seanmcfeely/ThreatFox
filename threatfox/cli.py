@@ -32,9 +32,7 @@ def build_parser(parser: argparse.ArgumentParser):
 
     subparsers = parser.add_subparsers(dest="command")
 
-    ioc_parser = subparsers.add_parser(
-        "ioc", aliases=["i"], help="ThreatFox IOC API interface."
-    )
+    ioc_parser = subparsers.add_parser("ioc", aliases=["i"], help="ThreatFox IOC API interface.")
     ioc_parser.add_argument(
         "-i",
         "--ioc-id",
@@ -263,7 +261,17 @@ async def execute(args: argparse.Namespace):
 
         if args.command == "submit":
             LOGGER.warning(f"IOC submission not yet tested with api-key and valid ioc data.")
-            results = await ic.submit_iocs(threat_type=args.threat_type, ioc_type=args.ioc_type, malware=args.malware, iocs=args.iocs, confidence_level=args.confidence_level, reference=args.reference, tags=args.tags, comment=args.comment, anonymous=args.anonymous)
+            results = await ic.submit_iocs(
+                threat_type=args.threat_type,
+                ioc_type=args.ioc_type,
+                malware=args.malware,
+                iocs=args.iocs,
+                confidence_level=args.confidence_level,
+                reference=args.reference,
+                tags=args.tags,
+                comment=args.comment,
+                anonymous=args.anonymous,
+            )
             print(json.dumps(results, indent=2))
             return
 
