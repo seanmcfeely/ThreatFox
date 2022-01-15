@@ -28,7 +28,7 @@ class ThreatFoxClient:
         self.api_key = get_api_key() if api_key is None else api_key
         self.headers = {}
         if self.api_key is not None:
-            self.headers = {"api-key": api_key, "content-type": "application/json"}
+            self.headers = {"api-key": self.api_key, "content-type": "application/json"}
         self.kwargs = kwargs
         if "proxy" not in self.kwargs:
             # check the config for proxy settings

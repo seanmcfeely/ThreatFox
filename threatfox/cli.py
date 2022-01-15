@@ -270,7 +270,7 @@ async def execute(args: argparse.Namespace):
                 reference=args.reference,
                 tags=args.tags,
                 comment=args.comment,
-                anonymous=args.anonymous,
+                anonymous=1 if args.anonymous else 0,
             )
             print(json.dumps(results, indent=2))
             return
