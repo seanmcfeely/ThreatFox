@@ -9,6 +9,7 @@ HOME_PATH = os.path.dirname(os.path.abspath(__file__))
 
 TEST_CONFIG_PATH = os.path.join(HOME_PATH, "tmp_config.ini")
 FAKE_CONFIG_PATH = os.path.join(HOME_PATH, "fake_config.ini")
+TEST_DATA_PATH = os.path.join(HOME_PATH, "data.json")
 
 TEST_APIKEY = "fakeapikey"
 

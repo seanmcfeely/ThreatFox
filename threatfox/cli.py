@@ -201,67 +201,67 @@ async def execute(args: argparse.Namespace):
     if args.save_api_key:
         return save_api_key(args.save_api_key)
 
-    async with ThreatFoxClient(api_key=args.api_key) as ic:
+    async with ThreatFoxClient(api_key=args.api_key) as tfc:
 
         if args.command == "malware":
             if args.query_malware:
-                results = await ic.query_malware_iocs(malware=args.query_malware, limit=1000)
+                results = await tfc.query_malware_iocs(malware=args.query_malware, limit=1000)
                 print(json.dumps(results, indent=2))
                 return
 
             if args.search_malware_families:
-                results = await ic.search_malware_families(malware=args.search_malware_families)
+                results = await tfc.search_malware_families(malware=args.search_malware_families)
                 print(json.dumps(results, indent=2))
                 return
 
             if args.get_malware_list:
-                results = await ic.get_malware_list()
+                results = await tfc.get_malware_list()
                 print(json.dumps(results, indent=2))
                 return
 
         if args.command == "ioc":
             if args.ioc_id:
-                results = await ic.get_ioc_by_id(ioc_id=args.ioc_id)
+                results = await tfc.get_ioc_by_id(ioc_id=args.ioc_id)
                 print(json.dumps(results, indent=2))
                 return
             if args.search_ioc:
-                results = await ic.search_ioc(search_term=args.search_ioc)
+                results = await tfc.search_ioc(search_term=args.search_ioc)
                 print(json.dumps(results, indent=2))
                 return
             if args.search_hash:
-                results = await ic.search_hash(hash=args.search_hash)
+                results = await tfc.search_hash(hash=args.search_hash)
                 print(json.dumps(results, indent=2))
                 return
             if args.get_ioc_types:
-                results = await ic.get_ioc_threat_types()
+                results = await tfc.get_ioc_threat_types()
                 print(json.dumps(results, indent=2))
                 return
             if args.bulk_day_filter_iocs:
-                results = await ic.get_iocs(days=args.bulk_day_filter_iocs)
+                results = await tfc.get_iocs(days=args.bulk_day_filter_iocs)
                 print(json.dumps(results, indent=2))
                 return
             if args.get_all_available_iocs:
-                results = await ic.get_iocs(s)
+                results = await tfc.get_iocs(s)
                 print(json.dumps(results, indent=2))
                 return
             if args.query_malware:
-                results = await ic.query_malware_iocs(malware=args.query_malware_iocs, limit=1000)
+                results = await tfc.query_malware_iocs(malware=args.query_malware_iocs, limit=1000)
                 print(json.dumps(results, indent=2))
                 return
 
         if args.command == "tag":
             if args.query_tag:
-                results = await ic.query_tag(tag=args.query_tag, limit=1000)
+                results = await tfc.query_tag(tag=args.query_tag, limit=1000)
                 print(json.dumps(results, indent=2))
                 return
             if args.get_tag_list:
-                results = await ic.get_tag_list()
+                results = await tfc.get_tag_list()
                 print(json.dumps(results, indent=2))
                 return
 
         if args.command == "submit":
             LOGGER.warning(f"IOC submission not yet tested with api-key and valid ioc data.")
-            results = await ic.submit_iocs(
+            results = await tfc.submit_iocs(
                 threat_type=args.threat_type,
                 ioc_type=args.ioc_type,
                 malware=args.malware,

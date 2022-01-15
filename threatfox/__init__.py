@@ -8,7 +8,7 @@ import logging
 
 from typing import List
 
-from threatfox.config import get_api_url, get_api_key, get_configured_proxy, get_max_result_contraint
+from threatfox.config import get_api_url, get_api_key, get_configured_proxy
 
 __version__ = "0.0.1"
 
