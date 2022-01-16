@@ -27,7 +27,7 @@ def build_parser(parser: argparse.ArgumentParser):
     parser.add_argument(
         "--save-api-key",
         action="store",
-        help="Save an ThreatFox API key to use as the default. WARNING: not securely stored.",
+        help="Save an ThreatFox API key to use as the default.",
     )
 
     subparsers = parser.add_subparsers(dest="command")
@@ -101,7 +101,7 @@ def build_parser(parser: argparse.ArgumentParser):
     )
 
     # Tags
-    tag_parser = subparsers.add_parser("tag", help="ThreatFox tag operations.")
+    tag_parser = subparsers.add_parser("tag", aliases=["t"], help="ThreatFox tag operations.")
     tag_parser.add_argument(
         "-t",
         "--query-tag",
@@ -118,7 +118,7 @@ def build_parser(parser: argparse.ArgumentParser):
     )
 
     # Submit IOCs
-    submit_parser = subparsers.add_parser("submit", help="Submit IOCs to ThreatFox.")
+    submit_parser = subparsers.add_parser("submit", aliases=["s"], help="Submit IOCs to ThreatFox.")
     submit_parser.add_argument(
         "-tt",
         "--threat-type",
@@ -260,7 +260,6 @@ async def execute(args: argparse.Namespace):
                 return
 
         if args.command == "submit":
-            LOGGER.warning(f"IOC submission not yet tested with api-key and valid ioc data.")
             results = await tfc.submit_iocs(
                 threat_type=args.threat_type,
                 ioc_type=args.ioc_type,

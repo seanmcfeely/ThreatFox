@@ -10,7 +10,7 @@ from typing import List
 
 from threatfox.config import get_api_url, get_api_key, get_configured_proxy
 
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 
 
 class ThreatFoxClient:
@@ -222,7 +222,7 @@ class ThreatFoxClient:
             comment: Your comment on the IOCs.
             anonymous: If set to 1, your submission will be anonymous. Default: 0
         Returns:
-            XXX I don't know yet. Haven't tried it and they didn't document it..
+            A result dictionary.
         """
 
         payload = {
@@ -237,11 +237,6 @@ class ThreatFoxClient:
             "tags": tags,
             "iocs": iocs,
         }
-
-        # status, result = await self.execute("POST", payload=payload, **kwargs)
-
-        # if status != 200:
-        #    self.logger.error(f"got {status} status code: {response}")
 
         results = await self.execute_and_return_object("POST", payload=payload, **kwargs)
         return results
