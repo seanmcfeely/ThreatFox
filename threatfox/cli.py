@@ -152,12 +152,8 @@ def build_parser(parser: argparse.ArgumentParser):
         help="IOC values. Use as many times as you need.",
         default=[],
     )
-    submit_parser.add_argument(
-        "--from-stdin", action="store_true", help="Receive IOC values from STDIN."
-    )
-    submit_parser.add_argument(
-        "--from-file", action="store", help="Path to file to load IOC values from."
-    )
+    submit_parser.add_argument("--from-stdin", action="store_true", help="Receive IOC values from STDIN.")
+    submit_parser.add_argument("--from-file", action="store", help="Path to file to load IOC values from.")
     submit_parser.add_argument(
         "-cl",
         "--confidence-level",
@@ -225,7 +221,7 @@ async def execute(args: argparse.Namespace):
                 print(json.dumps(results, indent=2))
                 return
 
-        if args.command == "ioc" or args.command == 'i':
+        if args.command == "ioc" or args.command == "i":
             if args.ioc_id:
                 results = await tfc.get_ioc_by_id(ioc_id=args.ioc_id)
                 print(json.dumps(results, indent=2))
@@ -275,7 +271,7 @@ async def execute(args: argparse.Namespace):
 
             if args.from_file:
                 logging.debug(f"reading IOC values from '{args.from_file}'.")
-                with open(args.from_file, 'r') as fp:
+                with open(args.from_file, "r") as fp:
                     args.iocs = [line.strip() for line in fp.readlines()]
 
             if not args.iocs:

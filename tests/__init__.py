@@ -45,12 +45,14 @@ def test_ioc_data():
         data = json.load(fp)
     return data
 
+
 @pytest.fixture
 def test_ioc_values():
     data = []
     with open(TEST_URL_VALUES, "r") as fp:
         data = [line.split() for line in fp.readlines()]
     return data
+
 
 @pytest.fixture
 def fake_submission_result():

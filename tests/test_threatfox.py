@@ -57,16 +57,16 @@ async def test_submission(mock_response, test_ioc_values, fake_submission_result
     async with ThreatFoxClient(api_key=TEST_APIKEY) as tfc:
 
         results = await tfc.submit_iocs(
-                threat_type="payload_delivery",
-                ioc_type="url",
-                malware="win.emotet",
-                iocs=test_ioc_values,
-                confidence_level=90,
-                reference="testing",
-                tags=["Emotet"],
-                comment="Testing",
-                anonymous=1,
-            )
+            threat_type="payload_delivery",
+            ioc_type="url",
+            malware="win.emotet",
+            iocs=test_ioc_values,
+            confidence_level=90,
+            reference="testing",
+            tags=["Emotet"],
+            comment="Testing",
+            anonymous=1,
+        )
         assert isinstance(results, dict)
         assert isinstance(results["data"], dict)
         assert results["query_status"] == "ok"
