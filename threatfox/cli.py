@@ -147,10 +147,16 @@ def build_parser(parser: argparse.ArgumentParser):
         "-i",
         "--ioc-value",
         dest="iocs",
-        required=True,
+        required=False,
         action="append",
         help="IOC values. Use as many times as you need.",
         default=[],
+    )
+    submit_parser.add_argument(
+        "--from-stdin", action="store_true", help="Receive IOC values from STDIN."
+    )
+    submit_parser.add_argument(
+        "--from-file", action="store", help="Path to file to load IOC values from."
     )
     submit_parser.add_argument(
         "-cl",
@@ -203,7 +209,7 @@ async def execute(args: argparse.Namespace):
 
     async with ThreatFoxClient(api_key=args.api_key) as tfc:
 
-        if args.command == "malware":
+        if args.command == "malware" or args.command == "m":
             if args.query_malware:
                 results = await tfc.query_malware_iocs(malware=args.query_malware, limit=1000)
                 print(json.dumps(results, indent=2))
@@ -219,7 +225,7 @@ async def execute(args: argparse.Namespace):
                 print(json.dumps(results, indent=2))
                 return
 
-        if args.command == "ioc":
+        if args.command == "ioc" or args.command == 'i':
             if args.ioc_id:
                 results = await tfc.get_ioc_by_id(ioc_id=args.ioc_id)
                 print(json.dumps(results, indent=2))
@@ -249,7 +255,7 @@ async def execute(args: argparse.Namespace):
                 print(json.dumps(results, indent=2))
                 return
 
-        if args.command == "tag":
+        if args.command == "tag" or args.command == "t":
             if args.query_tag:
                 results = await tfc.query_tag(tag=args.query_tag, limit=1000)
                 print(json.dumps(results, indent=2))
@@ -259,7 +265,23 @@ async def execute(args: argparse.Namespace):
                 print(json.dumps(results, indent=2))
                 return
 
-        if args.command == "submit":
+        if args.command == "submit" or args.command == "s":
+            if args.iocs and (args.from_stdin or args.from_file):
+                logging.warning(f"passed IOC values will be overritten: {args.iocs}")
+
+            if args.from_stdin:
+                logging.debug("reading IOC values from STDIN.")
+                args.iocs = [line.strip() for line in sys.stdin]
+
+            if args.from_file:
+                logging.debug(f"reading IOC values from '{args.from_file}'.")
+                with open(args.from_file, 'r') as fp:
+                    args.iocs = [line.strip() for line in fp.readlines()]
+
+            if not args.iocs:
+                logging.error(f"You didn't pass any IOC values. Use `-i` or `--from-stdin` or `--from-file`")
+                return False
+
             results = await tfc.submit_iocs(
                 threat_type=args.threat_type,
                 ioc_type=args.ioc_type,

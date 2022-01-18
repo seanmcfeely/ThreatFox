@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "threatfox"
-version = "0.0.1"
+version = "1.0.0"
 description = "Python library and command line tool for interacting with the ThreatFox API provided by abuse.ch."
 authors = ["Sean McFeely <mcfeelynaes@gmail.com>"]
 

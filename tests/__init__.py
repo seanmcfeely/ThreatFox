@@ -10,6 +10,8 @@ HOME_PATH = os.path.dirname(os.path.abspath(__file__))
 TEST_CONFIG_PATH = os.path.join(HOME_PATH, "tmp_config.ini")
 FAKE_CONFIG_PATH = os.path.join(HOME_PATH, "fake_config.ini")
 TEST_DATA_PATH = os.path.join(HOME_PATH, "data.json")
+TEST_URL_VALUES = os.path.join(HOME_PATH, "urls.txt")
+TEST_SUB_RESULT = os.path.join(HOME_PATH, "submission_result.json")
 
 TEST_APIKEY = "fakeapikey"
 
@@ -37,8 +39,22 @@ def mock_response():
 
 
 @pytest.fixture
-def test_data():
+def test_ioc_data():
     data = []
     with open(TEST_DATA_PATH, "r") as fp:
+        data = json.load(fp)
+    return data
+
+@pytest.fixture
+def test_ioc_values():
+    data = []
+    with open(TEST_URL_VALUES, "r") as fp:
+        data = [line.split() for line in fp.readlines()]
+    return data
+
+@pytest.fixture
+def fake_submission_result():
+    data = []
+    with open(TEST_SUB_RESULT, "r") as fp:
         data = json.load(fp)
     return data

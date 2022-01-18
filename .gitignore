@@ -3,6 +3,9 @@ tfcli
 scratch/
 .DS_Store
 
+# I don't want to use poetry to build
+poetry.lock
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

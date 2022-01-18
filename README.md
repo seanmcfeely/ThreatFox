@@ -86,7 +86,7 @@ $ threatfox ioc -s 'http://auto.lambolero.com/f1nygync/J18Keqh/'
 }
 ```
 
-### Example: Submit an IOC
+### Example: Submitting IOCs
 
 You can submit one or more IOCs via the command line too:
 
@@ -104,6 +104,54 @@ $ threatfox submit -tt payload -it sha256_hash -m win.ave_maria -i db0b1dbcb8193
   }
 }
 ```
+
+You can also submit IOC in bulk by passing the IOCs via STDIN or by pointing to a file containing the IOC values.
+
+```console
+$ cat urls.txt
+http://auto.lambolero.com/zip/AIN_426946/
+http://auto.lambolero.com/f1nygync/065138_50/
+http://auto.lambolero.com/f1nygync/IOENXupeXUt/
+```
+
+#### From STDIN
+
+```console
+$ cat urls.txt | threatfox submit -tt payload_delivery -it url -m win.emotet -cl 90 -t Emotet --from-stdin
+{
+  "query_status": "ok",
+  "data": {
+    "ok": [
+      "http://auto.lambolero.com/zip/AIN_426946/",
+      "http://auto.lambolero.com/f1nygync/065138_50/",
+      "http://auto.lambolero.com/f1nygync/IOENXupeXUt/"
+    ],
+    "ignored": [],
+    "duplicated": [],
+    "reward": 5
+  }
+}
+```
+
+#### From File
+
+```console
+threatfox submit -tt payload_delivery -it url -m win.emotet -cl 90 -t Emotet --from-file urls.txt       
+{
+  "query_status": "ok",
+  "data": {
+    "ok": [],
+    "ignored": [],
+    "duplicated": [
+      "http://auto.lambolero.com/zip/AIN_426946/",
+      "http://auto.lambolero.com/f1nygync/065138_50/",
+      "http://auto.lambolero.com/f1nygync/IOENXupeXUt/"
+    ],
+    "reward": 0
+  }
+}
+```
+
 
 ## Questions
 

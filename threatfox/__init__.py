@@ -10,7 +10,7 @@ from typing import List
 
 from threatfox.config import get_api_url, get_api_key, get_configured_proxy
 
-__version__ = "0.0.2"
+__version__ = "1.0.0"
 
 
 class ThreatFoxClient:
