@@ -136,7 +136,7 @@ $ cat urls.txt | threatfox submit -tt payload_delivery -it url -m win.emotet -cl
 #### From File
 
 ```console
-threatfox submit -tt payload_delivery -it url -m win.emotet -cl 90 -t Emotet --from-file urls.txt       
+$ threatfox submit -tt payload_delivery -it url -m win.emotet -cl 90 -t Emotet --from-file urls.txt       
 {
   "query_status": "ok",
   "data": {
